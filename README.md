@@ -8,6 +8,16 @@ To run this script , you need a NodeJS environment to run , learn more : <https:
 
 V1.0.0 : init version
 
+## Install
+
+1. clone the script
+
+`git clone https://github.com/luochenxun/markdown-number-md-header.git`
+
+1. Install it to your buildPath
+
+`sudo cp ./markdownNumberHeader.js /usr/local/bin`
+
 ## Brief
 
 This script is used to number the header of markdown-files as doc-numbers , like :
