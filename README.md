@@ -10,11 +10,11 @@ V1.0.0 : init version
 
 ## Install
 
-1. clone the script
+1、clone the script
 
 `git clone https://github.com/luochenxun/markdown-number-md-header.git`
 
-1. Install it to your buildPath
+2、Install it to your buildPath
 
 `sudo cp ./markdownNumberHeader.js /usr/local/bin`
 
