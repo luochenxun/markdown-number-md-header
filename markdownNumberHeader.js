@@ -95,6 +95,10 @@ function titleMarkdownFile(filePath) {
     if(err) throw err;
 
     let contentLines = data.split('\n');
+    let lastLine = contentLines[contentLines.length - 1];
+    if (lastLine.trim().length == 0) {
+      contentLines.splice(-1,1)
+    }
     let contentBuffer = new String();
     let headerArray = [ 0 , 0 , 0 , 0];
     let isInCodes = false;
@@ -103,13 +107,15 @@ function titleMarkdownFile(filePath) {
 
       // find header
       let regFindHeader = /^#+\s/g;
-      let regFindCode = /^`+\s*/g;
+      let regFindCode = /^```\s*/g;
       let regFindNumHeader = /^#+\s[\d|.]+\s/g;
       let foundHeader = line.trimLeft().match(regFindHeader);
       let foundCode = line.trimLeft().match(regFindCode);
       let foundDocHeader = line.trimLeft().match(regFindNumHeader);
       let header; // the markdown header, as : #,##
       let headerTitle; // headerTitle , as : 1 ， 1.1
+
+      // skip the
 
       // delete the old number
       if(foundHeader != null && foundDocHeader != null){
@@ -129,7 +135,6 @@ function titleMarkdownFile(filePath) {
       else if (isInCodes) {
         foundHeader = null;
       }
-      console.log('foundCode:' + foundCode + ',index: ' + (index+1))
 
       // add new number
       if(foundHeader != null){
