@@ -6,7 +6,7 @@ To run this script , you need a NodeJS environment to run , learn more : <https:
 
 ## version
 
-V1.0.0 : init version
+V1.0.1 : init version
 
 ## Install
 
@@ -68,3 +68,8 @@ markdownNumberHeader.js 脚本就是解决这个问题的大救星~
 1\. markdownNumberHeader xxx/xxx/xxx.md  
 2\. markdownNumberHeader xxx/xxx/Diretory
 ```
+
+
+
+
+
