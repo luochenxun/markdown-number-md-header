@@ -4,8 +4,6 @@
  *    Created by luochenxun on 16/08/28.
  *    Copyright © 2016年 Jiayoubao. All rights reserved.
  *
- *  V 1.0.0
- *
  *  Brief:
  *
  *  Need a NodeJS environment to run , learn more : https://github.com/nodejs/node  <br>
@@ -28,8 +26,8 @@ You can use it to translate a markdown-file directly, or you can use it to a dir
 When you use a diretory as a option of the script, \n \
 it will traverse the diretory and its sub-diretory , and translate all the .md files it them. \n \
   Usage : \n\
-  1. markdownNumberHeader xxx/xxx/xxx.md\n\
-  2. markdownNumberHeader xxx/xxx/Diretory\n\
+  1. markdownTitleHeader xxx/xxx/xxx.md\n\
+  2. markdownTitleHeader xxx/xxx/Diretory\n\
 ';
 const fs = require('fs');
 const path = require('path');
@@ -99,13 +97,16 @@ function titleMarkdownFile(filePath) {
     let contentLines = data.split('\n');
     let contentBuffer = new String();
     let headerArray = [ 0 , 0 , 0 , 0];
+    let isInCodes = false;
 
-    contentLines.map(line=>{
+    contentLines.map((line, index)=>{
 
       // find header
       let regFindHeader = /^#+\s/g;
+      let regFindCode = /^`+\s*/g;
       let regFindNumHeader = /^#+\s[\d|.]+\s/g;
       let foundHeader = line.trimLeft().match(regFindHeader);
+      let foundCode = line.trimLeft().match(regFindCode);
       let foundDocHeader = line.trimLeft().match(regFindNumHeader);
       let header; // the markdown header, as : #,##
       let headerTitle; // headerTitle , as : 1 ， 1.1
@@ -115,6 +116,20 @@ function titleMarkdownFile(filePath) {
         let header = foundHeader[0];
         line = line.trimLeft().replace(regFindNumHeader, header);
       }
+
+      // skip the # in codes
+      if (foundCode && !isInCodes) {
+        isInCodes = true;
+        foundHeader = null;
+      }
+      else if(foundCode && isInCodes) {
+        isInCodes = false;
+        foundHeader = null;
+      }
+      else if (isInCodes) {
+        foundHeader = null;
+      }
+      console.log('foundCode:' + foundCode + ',index: ' + (index+1))
 
       // add new number
       if(foundHeader != null){
@@ -140,9 +155,9 @@ function titleMarkdownFile(filePath) {
     });
 
     fs.writeFile(filePath + '_bk', contentBuffer, 'utf8', function(err){
-        if(err) throw err;
-        fs.renameSync(filePath + '_bk', filePath);
-        console.log('Add doc-header of file : ' + filePath + ' success. ');
+      if(err) throw err;
+      fs.renameSync(filePath + '_bk', filePath);
+      console.log('Add doc-header of file : ' + filePath + ' success. ');
     });
 
   });
