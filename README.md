@@ -6,7 +6,8 @@ To run this script , you need a NodeJS environment to run , learn more : <https:
 
 ## version
 
-V1.0.1 : init version
+V1.0.1 : Fix bug in codes, skip the # in codes
+V1.0.0 : init version
 
 ## Install
 
